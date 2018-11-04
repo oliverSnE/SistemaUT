@@ -19,9 +19,53 @@ namespace SistemaUTH.Controllers
         }
 
         // GET: Estudiantes
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            return View(await _context.Estudiante.ToListAsync());
+
+            // return View(await _context.Estudiante.ToListAsync());
+
+            ViewData["CurrentSort"] = sortOrder;//obtiene la ubicacion actual;
+
+            ViewData["NombreSortParm"] = String.IsNullOrEmpty(sortOrder) ? "nombre_desc" : "";
+            ViewData["ApellidosSortParm"] = sortOrder == "apellidos_asc" ? "apellidos_desc" : "apellidos_asc";
+            ViewData["CurrentFilter"] = searchString; // obtiene el valor a buscar en el input
+
+            if (searchString != null)
+            {
+                page = 1;
+            }//validacion de la busqueda muestra, si hay resultado o noes lo que muestra.
+            else
+            {
+                searchString = currentFilter;
+            }
+            var estudiantes = from s in _context.Estudiante select s; //un select referente a una query
+
+            if (!String.IsNullOrEmpty(searchString))//verificar si la var Serchstring tiene nombre o descripcio
+            {
+                estudiantes = estudiantes.Where(s => s.Nombre.Contains(searchString) || s.Apellidos.Contains(searchString));
+            }
+            switch (sortOrder) // ordena lascategorias
+            {
+                case "nombre_desc":
+                    estudiantes = estudiantes.OrderByDescending(s => s.Nombre);
+                    break;
+                case "apellidos_asc":
+                    estudiantes = estudiantes.OrderBy(s => s.Apellidos);
+                    break;
+                case "apellidos_desc":
+                    estudiantes = estudiantes.OrderByDescending(s => s.Apellidos);
+                    break;
+                default:
+                    estudiantes = estudiantes.OrderBy(s => s.Nombre);
+                    break;
+            }
+            //return View(await _context.Categoria.ToListAsync());
+            // regresa la ista con el ordenamiento realizado a la coleccion Categorias
+            //return View(await categorias.AsNoTracking().ToListAsync());
+
+            int pageSize = 3;//visualisa el nuemero de elementos que muestra una vista
+            return View(await Paginacion<Estudiante>.CreatesAsync(estudiantes.AsNoTracking(), page ?? 1, pageSize));//regresa el total de resultado de elemento. 
+
         }
 
         // GET: Estudiantes/Details/5
@@ -53,7 +97,7 @@ namespace SistemaUTH.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EstudianteID,Name,Matricula,Ap_paterno,Ap_materno")] Estudiante estudiante)
+        public async Task<IActionResult> Create([Bind("EstudianteID,Matricula,Nombre,Apellidos")] Estudiante estudiante)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +129,7 @@ namespace SistemaUTH.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EstudianteID,Name,Matricula,Ap_paterno,Ap_materno")] Estudiante estudiante)
+        public async Task<IActionResult> Edit(int id, [Bind("EstudianteID,Matricula,Nombre,Apellidos")] Estudiante estudiante)
         {
             if (id != estudiante.EstudianteID)
             {

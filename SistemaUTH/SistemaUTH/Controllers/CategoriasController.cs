@@ -21,7 +21,7 @@ namespace SistemaUTH.Controllers
         // GET: Categorias
         public async Task<IActionResult> Index(string sortOrder, string searchString,string currentFilter, int? page)
         {
-            ViewData["CurrentSort"] = sortOrder;//obtiene la obicacion actual;
+            ViewData["CurrentSort"] = sortOrder;//obtiene la ubicacion actual;
 
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DescripcionSortParm"] = sortOrder== "descripcion_asc"?"descripcion_desc":"descripcion_asc";
@@ -58,7 +58,7 @@ namespace SistemaUTH.Controllers
             // regresa la ista con el ordenamiento realizado a la coleccion Categorias
             //return View(await categorias.AsNoTracking().ToListAsync());
 
-            int pageSize = 5;//visualisa el nuemero de elementos que muestra una vista
+            int pageSize = 3;//visualisa el nuemero de elementos que muestra una vista
             return View(await Paginacion<Categoria>.CreatesAsync(categorias.AsNoTracking(),page??1,pageSize));//regresa el total de resultado de elemento. 
 
         }

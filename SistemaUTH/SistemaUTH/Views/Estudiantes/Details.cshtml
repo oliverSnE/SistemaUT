@@ -1,7 +1,7 @@
 ﻿@model SistemaUTH.Models.Estudiante
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles";
 }
 
 <h2>Details</h2>
@@ -11,32 +11,27 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.Matricula)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Matricula)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Ap_paterno)
+            @Html.DisplayNameFor(model => model.Nombre)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Ap_paterno)
+            @Html.DisplayFor(model => model.Nombre)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Ap_materno)
+            @Html.DisplayNameFor(model => model.Apellidos)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Ap_materno)
+            @Html.DisplayFor(model => model.Apellidos)
         </dd>
+        
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.EstudianteID">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.EstudianteID">Editar</a> |
     <a asp-action="Index">Back to List</a>
 </div>

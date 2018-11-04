@@ -1,40 +1,35 @@
 ﻿@model SistemaUTH.Models.Estudiante
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Borrar";
 }
 
-<h2>Delete</h2>
+<h2>Borrar</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>¿Está seguro de que desea eliminar?</h3>
 <div>
     <h4>Estudiante</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.Matricula)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Matricula)
+            @Html.DisplayFor(model => model.Nombre)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Ap_paterno)
+            @Html.DisplayNameFor(model => model.Nombre)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Ap_paterno)
+            @Html.DisplayFor(model => model.Nombre)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Ap_materno)
+            @Html.DisplayNameFor(model => model.Apellidos)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Ap_materno)
+            @Html.DisplayFor(model => model.Apellidos)
         </dd>
+        
     </dl>
     
     <form asp-action="Delete">
