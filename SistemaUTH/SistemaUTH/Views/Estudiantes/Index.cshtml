@@ -82,7 +82,7 @@
                asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn btn-info">@i</a>
         }
     </div>
-    <div class="col-sm-1"> 
+    <div class="col-sm-1">  
         <a asp-action="Index" asp-route-sortOrder="@ViewData["CurrentSort"]" asp-route-page="(@Model.PageIndex+1)"
            asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn btn-success @nextDisabled">Siguiente</a>
     </div>
