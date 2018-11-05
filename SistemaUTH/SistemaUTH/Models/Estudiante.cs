@@ -10,21 +10,25 @@ namespace SistemaUTH.Models
     {
         public int EstudianteID { get; set; }
 
-        //Matricula
-        [Required]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "El minimo de letras permitido son 3 y maximo 50")]
-        public Int32 Matricula { get; set; }
         //Nombre
         [Required]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "El minimo de letras permitido son 3 y maximo 50")]
-        public string Nombre { get; set; }
-        
+        public string Name { get; set; }
+
+        //Matricula
+        [Required]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "El minimo de letras permitido son 3 y maximo 50")]
+        public String Matricula { get; set; }
+
         //apellido paterno
         [Required]
         [StringLength(50, MinimumLength =3, ErrorMessage = "El minimo de letras permitido son 3 y maximo 50")]
-        public string Apellidos { get; set; }
+        public string Ap_paterno { get; set; }
 
-       
+        //apellido Materno
+        [Required]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "El minimo de letras permitido son 3 y maximo 50")]
+        public string Ap_materno { get; set; }
 
     }
 }

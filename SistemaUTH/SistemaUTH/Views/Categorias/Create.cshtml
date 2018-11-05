@@ -1,7 +1,7 @@
 ﻿@model SistemaUTH.Models.Categoria
 
 @{
-    ViewData["Title"] = "Nueva categoría";
+    ViewData["Title"] = "Registrar";
 }
 
 <h2>Crea nueva categoria</h2>
@@ -13,12 +13,12 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Nombre</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
+                <label asp-for="Descripcion" class="control-label">Descripción</label>
                 <input asp-for="Descripcion" class="form-control" />
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Agregar" class="btn btn-default" />
+                <input type="submit" value="Registrar" class="btn btn-default" />
             </div>
         </form>
     </div>

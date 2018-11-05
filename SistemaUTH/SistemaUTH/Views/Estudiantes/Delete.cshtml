@@ -4,37 +4,42 @@
     ViewData["Title"] = "Borrar";
 }
 
-<h2>Borrar</h2>
+<h2>Eliminar Estudiante</h2>
 
-<h3>¿Está seguro de que desea eliminar?</h3>
+<h3>¿Estás seguro que lo deseas eliminar?</h3>
 <div>
     <h4>Estudiante</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Matricula)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Nombre)
+            @Html.DisplayFor(model => model.Matricula)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
+            @Html.DisplayNameFor(model => model.Ap_paterno)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Nombre)
+            @Html.DisplayFor(model => model.Ap_paterno)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Apellidos)
+            @Html.DisplayNameFor(model => model.Ap_materno)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Apellidos)
+            @Html.DisplayFor(model => model.Ap_materno)
         </dd>
-        
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="EstudianteID" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index">Regresar</a>
     </form>
 </div>

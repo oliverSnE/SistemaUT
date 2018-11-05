@@ -9,22 +9,22 @@ using SistemaUTH.Models;
 
 namespace SistemaUTH.Controllers
 {
-    public class EstudiantesController : Controller
+    public class InstructorsController : Controller
     {
         private readonly SistemaUTHContext _context;
 
-        public EstudiantesController(SistemaUTHContext context)
+        public InstructorsController(SistemaUTHContext context)
         {
             _context = context;
         }
 
-        // GET: Estudiantes
+        // GET: Instructors
         public async Task<IActionResult> Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
             ViewData["CurrentSort"] = sortOrder;//obtiene la obicacion actual;
 
-            ViewData["MatriculaSortParm"] = String.IsNullOrEmpty(sortOrder) ? "matricula_desc" : "";
-            ViewData["Ap1SortParm"] = sortOrder == "ap1_asc" ? "ap1_desc" : "ap1_asc";
+            ViewData["NumSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DescripcionSortParm"] = sortOrder == "descripcion_asc" ? "descripcion_desc" : "descripcion_asc";
             ViewData["CurrentFilter"] = searchString; // obtiene el valor a buscar en el input
 
             if (searchString != null)
@@ -35,37 +35,35 @@ namespace SistemaUTH.Controllers
             {
                 searchString = currentFilter;
             }
-            var estudiantes = from s in _context.Estudiante select s; //un select referente a una query
+            var instructores = from s in _context.Instructor select s; //un select referente a una query
 
             if (!String.IsNullOrEmpty(searchString))//verificar si la var Serchstring tiene nombre o descripcio
             {
-                estudiantes = estudiantes.Where(s => s.Matricula.Contains(searchString) || s.Ap_paterno.Contains(searchString));
+                instructores = instructores.Where(s => s.NumEmpleado.Contains(searchString) || s.Name.Contains(searchString));
             }
             switch (sortOrder) // ordena lascategorias
             {
-                case "matricula_desc":
-                    estudiantes = estudiantes.OrderByDescending(s => s.Matricula);
+                case "name_desc":
+                    instructores = instructores.OrderByDescending(s => s.NumEmpleado);
                     break;
-                case "ap1_asc":
-                    estudiantes = estudiantes.OrderBy(s => s.Ap_paterno);
+                case "descripcion_asc":
+                    instructores = instructores.OrderBy(s => s.Name);
                     break;
-                case "ap1_desc":
-                    estudiantes = estudiantes.OrderByDescending(s => s.Ap_paterno);
+                case "descripcion_desc":
+                    instructores = instructores.OrderByDescending(s => s.Name);
                     break;
                 default:
-                    estudiantes = estudiantes.OrderBy(s => s.Matricula);
+                    instructores = instructores.OrderBy(s => s.NumEmpleado);
                     break;
             }
-            //return View(await _context.Categoria.ToListAsync());
-            // regresa la ista con el ordenamiento realizado a la coleccion Categorias
-            //return View(await categorias.AsNoTracking().ToListAsync());
-
+            
             int pageSize = 5;//visualisa el nuemero de elementos que muestra una vista
-            return View(await Paginacion<Estudiante>.CreatesAsync(estudiantes.AsNoTracking(), page ?? 1, pageSize));//regresa el total de resultado de elemento.
-            //return View(await _context.Estudiante.ToListAsync());
+            return View(await Paginacion<Instructor>.CreatesAsync(instructores.AsNoTracking(), page ?? 1, pageSize));//regresa el total de resultado de elemento. 
+
+            //return View(await _context.Instructor.ToListAsync());
         }
 
-        // GET: Estudiantes/Details/5
+        // GET: Instructors/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -73,39 +71,39 @@ namespace SistemaUTH.Controllers
                 return NotFound();
             }
 
-            var estudiante = await _context.Estudiante
-                .FirstOrDefaultAsync(m => m.EstudianteID == id);
-            if (estudiante == null)
+            var instructor = await _context.Instructor
+                .FirstOrDefaultAsync(m => m.instructorID == id);
+            if (instructor == null)
             {
                 return NotFound();
             }
 
-            return View(estudiante);
+            return View(instructor);
         }
 
-        // GET: Estudiantes/Create
+        // GET: Instructors/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Estudiantes/Create
+        // POST: Instructors/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EstudianteID,Name,Matricula,Ap_paterno,Ap_materno")] Estudiante estudiante)
+        public async Task<IActionResult> Create([Bind("instructorID,NumEmpleado,Name,Apellidos,Correo,Celular")] Instructor instructor)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(estudiante);
+                _context.Add(instructor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(estudiante);
+            return View(instructor);
         }
 
-        // GET: Estudiantes/Edit/5
+        // GET: Instructors/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -113,22 +111,22 @@ namespace SistemaUTH.Controllers
                 return NotFound();
             }
 
-            var estudiante = await _context.Estudiante.FindAsync(id);
-            if (estudiante == null)
+            var instructor = await _context.Instructor.FindAsync(id);
+            if (instructor == null)
             {
                 return NotFound();
             }
-            return View(estudiante);
+            return View(instructor);
         }
 
-        // POST: Estudiantes/Edit/5
+        // POST: Instructors/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EstudianteID,Name,Matricula,Ap_paterno,Ap_materno")] Estudiante estudiante)
+        public async Task<IActionResult> Edit(int id, [Bind("instructorID,NumEmpleado,Name,Apellidos,Correo,Celular")] Instructor instructor)
         {
-            if (id != estudiante.EstudianteID)
+            if (id != instructor.instructorID)
             {
                 return NotFound();
             }
@@ -137,12 +135,12 @@ namespace SistemaUTH.Controllers
             {
                 try
                 {
-                    _context.Update(estudiante);
+                    _context.Update(instructor);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EstudianteExists(estudiante.EstudianteID))
+                    if (!InstructorExists(instructor.instructorID))
                     {
                         return NotFound();
                     }
@@ -153,10 +151,10 @@ namespace SistemaUTH.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(estudiante);
+            return View(instructor);
         }
 
-        // GET: Estudiantes/Delete/5
+        // GET: Instructors/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -164,30 +162,30 @@ namespace SistemaUTH.Controllers
                 return NotFound();
             }
 
-            var estudiante = await _context.Estudiante
-                .FirstOrDefaultAsync(m => m.EstudianteID == id);
-            if (estudiante == null)
+            var instructor = await _context.Instructor
+                .FirstOrDefaultAsync(m => m.instructorID == id);
+            if (instructor == null)
             {
                 return NotFound();
             }
 
-            return View(estudiante);
+            return View(instructor);
         }
 
-        // POST: Estudiantes/Delete/5
+        // POST: Instructors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var estudiante = await _context.Estudiante.FindAsync(id);
-            _context.Estudiante.Remove(estudiante);
+            var instructor = await _context.Instructor.FindAsync(id);
+            _context.Instructor.Remove(instructor);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EstudianteExists(int id)
+        private bool InstructorExists(int id)
         {
-            return _context.Estudiante.Any(e => e.EstudianteID == id);
+            return _context.Instructor.Any(e => e.instructorID == id);
         }
     }
 }

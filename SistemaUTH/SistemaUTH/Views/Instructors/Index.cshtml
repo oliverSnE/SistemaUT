@@ -1,15 +1,16 @@
-﻿@model Paginacion<SistemaUTH.Models.Estudiante>
+﻿@model Paginacion<SistemaUTH.Models.Instructor>
 
 @{
-    ViewData["Title"] = "Estudiantes";
+    ViewData["Title"] = "Instructores";
 }
 
-<h2>Estudiantes</h2>
+<h2>Instructores</h2>
+
 
 <div class="row">
     <div class="col-sm-3">
         <p>
-            <a asp-action="Create" class="btn btn-primary">Agregar Estudiante</a>
+            <a asp-action="Create" class="btn btn-primary">Nuevo instructor</a>
         </p>
     </div>
     <div class="col-sm-9">
@@ -17,7 +18,7 @@
             <p>
                 Filtro: <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" />
                 <input type="submit" name="Buscar" value="Buscar" class="btn btn-success" />
-                <a asp-action="Index" class="btn btn-default">  Mostrar todos</a>
+                <a asp-action="Index" class="btn btn-default">Mostrar todos</a>
             </p>
         </form>
     </div>
@@ -27,20 +28,23 @@
     <thead>
         <tr>
             <th>
-                <a>Nombre</a>
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["MatriculaSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
-                    Matricula
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NumSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    Numero de empleado
                 </a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["Ap1SortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
-                    Paterno
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DescripcionSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    Nombre
                 </a>
             </th>
             <th>
-                <a>Materno</a>
+                <a>Apellidos</a>
+            </th>
+            <th>
+                <a>Correo</a>
+            </th>
+            <th>
+                <a>Celular</a>
             </th>
             <th></th>
         </tr>
@@ -50,21 +54,24 @@
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.NumEmpleado)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Matricula)
+                    @Html.DisplayFor(modelItem => item.Apellidos)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Ap_paterno)
+                    @Html.DisplayFor(modelItem => item.Correo)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Ap_materno)
+                    @Html.DisplayFor(modelItem => item.Celular)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.EstudianteID">Modificar</a> |
-                    <a asp-action="Details" asp-route-id="@item.EstudianteID">Detalles</a> |
-                    <a asp-action="Delete" asp-route-id="@item.EstudianteID">Eliminar</a>
+                    <a asp-action="Edit" asp-route-id="@item.instructorID">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.instructorID">Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.instructorID">Eliminar</a>
                 </td>
             </tr>
         }
@@ -95,4 +102,3 @@
     </div>
 
 </div>
-
