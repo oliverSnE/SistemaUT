@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SistemaUTH.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SistemaUTH.Controllers
 {
@@ -15,6 +16,7 @@ namespace SistemaUTH.Controllers
             return View();
         }
 
+        [Authorize(Roles="Administrador")]
         public IActionResult About()
         {
             ViewData["Message"] = "Sitio de gestion academica de UTH";
